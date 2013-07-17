@@ -11,5 +11,9 @@ post '/rolls' do
 
   @roll = value ? Roll.create({ value: value }) : Roll.create
 
-  erb :index  # HINT: what does this do? what should we do instead?
+  if request.xhr? # XHR is the X in AJAX, so this is the AJAX call
+    halt 200, {roll: @roll}.to_json
+  else # this would serve browsers, you could also filter by content type… YMMV
+    erb :index
+  end
 end
