@@ -7,21 +7,19 @@ $(document).ready(function () {
   //   4- use jQuery to submit an AJAX post to the form's action
   //   5- when the AJAX post is done, replace the contents of the "#die" DIV in the DOM using jQuery
 
-  $("#dieForm").submit(function(e) {
+  $("form").submit(function(e) {
     e.preventDefault();
     
-    $.ajax({
-    type: "POST",
-    url: "/rolls",
-    accepts: "application/json",
-    dataType: "json",
-
-    data: { 'country_iso' : country_iso,  'region' : region,  'prefix' : prefix },
-    success: function(data){
-        window.location.href = '/local'
-        // this is the bit where you render stuff
-    }
+    $.ajax(
+    {
+      type: "POST",
+      url: "/rolls",
+      data: { value: Math.floor(Math.random()*6 + 1) },
+      success: function(data){
+        $("#die").html(data);
+               // this is the bit where you render stuff
+      }
+    });
   });
-
 
 });
